@@ -13,10 +13,18 @@ Meteor.methods({
 		var urlAppInfo = 'http://api.playstoreapi.com/v1.1/apps/' + app + '?key=' + apiKey;
 		var urlSearch = 'http://api.playstoreapi.com/v1.1/search/' + category + '/' + keyword + '?key=' + apiKey;
 	
-		HTTP.get(urlSearch, {params: {}}, function(appDetails){
-			JSON.stringify(appDetails);
-			for(var i=0; i<appDetails.length; i++){
-					console.log(appDetails[i].itemID);
+		HTTP.get(urlSearch, {params: {}}, function(error,appDetails){
+			if(!error){
+				console.log(appDetails.data);
+				for(var i=0; i<appDetails.data.length; i++){
+					console.log(appDetails.data[i].itemID);
+					var urlAppInfo = 'http://api.playstoreapi.com/v1.1/apps/' + appDetails.data[i].itemID + '?key=' + apiKey;
+					HTTP.get(urlAppInfo, {params: {}}, function(error,appInfo){
+						if(!error){
+							console.log(appInfo.data[i].appName, appInfo.data[i].developer, appInfo.data[i].category, appInfo.data[i].logo, appInfo.data[i].price, appInfo.data[i].playStoreUrl, appInfo.data[i].video, appInfo.data[i].score);
+						}
+					});
+				}
 			}
 		});
 		
