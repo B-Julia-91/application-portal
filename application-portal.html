@@ -1,0 +1,178 @@
+<head>
+  <title>Application-portal</title>
+</head>
+
+<body>
+<p></p>
+<!--Loads jQuery-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!---->
+<div id="full-container">
+  <div id="container">
+	<!--Header with logo, heading and search field-->
+	<div id="header">
+		<a href="./" id="logo" title="Application portal for motion- and touch-based applications"><img src='/Test2.png' width="200" height="200" alt="Application Portal"/></a>
+		<div id="heading"><h1>Application Portal</h1><br><p>for motion- and touch-based applications</p></div>
+		<div id="search-box">
+		{{> searchField}}
+		</div>
+	</div>
+	<!--Content block with filtering and applications-->
+	<div id="content">
+		<div id="filterblock">
+			<div id="stores">
+				{{> storeFiltering}}
+			</div>
+			<div id="icons">
+				{{> iconFiltering}}
+			</div>
+		</div>
+		<div id="app-block">
+			<h4>Applications:</h4>
+			<div id="sorting">
+				{{> sorting}}
+			</div>
+			<div id="appList">
+				{{> appList}}
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+	
+	
+</body>
+
+<!--Template for the search field-->
+<template name="searchField">
+		<form id="sfh" class="searchField">
+			<input type="text" id="sf" size="40" maxlength="120" class="searchquery" placeholder="Search for an application"><input type="button" id="sb" value="Search" class="searchbutton">
+		</form>
+</template>
+
+<!--Template for the application container-->
+<template name="appList">
+	{{#each app}}
+	<div class="apps">
+		<div class="appIcon">
+			<!--icon-->
+			{{appIcon}}
+		</div>
+		<div class="appDetails">
+			<!--name-->
+			{{title}}<br>
+			<!--developer-->
+			{{developer}}<br>
+			<!--rating in stars, classification-->
+			{{rating}}
+			{{classification}}<br>
+			<!--link to video, price-->
+			{{video}}
+			{{price}}<br>
+			<!--filtering-icons-->
+			{{#if motionSensors}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}
+			{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}
+			{{#if mirophone}}<img src='/IconMicrophone.png' width="25" height="25">{{/if}}
+			{{#if proximitySensor}}<img src='/IconProximitySensor.png' width="25" height="25">{{/if}}
+			{{#if tap}}<img src='/IconTap.png' width="25" height="25">{{/if}}
+			{{#if drag}}<img src='/IconDrag.png' width="25" height="25">{{/if}}
+			{{#if flick}}<img src='/IconFlick.png' width="25" height="25">{{/if}}
+			{{#if tilt}}<img src='/IconTilt.png' width="25" height="25">{{/if}}
+			{{#if shake}}<img src='/IconShake.png' width="25" height="25">{{/if}}
+			{{#if pan}}<img src='/IconPan.png' width="25" height="25">{{/if}}
+			{{#if wave}}<img src='/IconWave.png' width="25" height="25">{{/if}}
+			{{#if arms}}<img src='/IconArms.png' width="25" height="25">{{/if}}
+			{{#if oneHand}}<img src='/IconOneHand.png' width="25" height="25">{{/if}}
+			{{#if twoHands}}<img src='/IconTwoHands.png' width="25" height="25">{{/if}}
+			{{#if finger}}<img src='/IconFinger.png' width="25" height="25">{{/if}}
+			{{#if vision}}<img src='/IconVision.png' width="25" height="25">{{/if}}
+			{{#if hearing}}<img src='/IconHearing.png' width="25" height="25">{{/if}}
+			{{#if speaking}}<img src='/IconSpeaking.png' width="25" height="25">{{/if}}
+			{{#if standing}}<img src='/IcoStanding.png' width="25" height="25">{{/if}}
+			{{#if sitting}}<img src='/IconSitting.png' width="25" height="25">{{/if}}
+			{{#if lying}}<img src='/IconLying.png' width="25" height="25">{{/if}}
+			{{#if horizontal}}<img src='/IconHorizontal.png' width="25" height="25">{{/if}}
+			{{#if vertical}}<img src='/IconVertical.png' width="25" height="25">{{/if}}
+		</div>	
+	</div>
+	{{/each}}
+</template>
+
+<!--Template for the sorting field-->
+<template name="sorting">
+		<form class="sorting">
+			<b>Sorting:</b>
+			<select name="sorting-menu" size="1">
+				<option value="best">Best-liked</option>
+				<option value="newest">Newest</option>
+				<option value="title">Title</option>
+			</select>
+		</form>
+</template>
+
+<!--Template for Market-Store-Filtering-->
+<template name="storeFiltering">
+		<div class="stores group">
+			<h2>Market Store:</h2>
+			<div class="selected_store">
+				<input type="checkbox" name="store" value="googlePlayStore" > Google Play Store
+			</div>
+			<div class="selected_store">
+				<input type="checkbox" name="store" value="appStore" > iTunes App Store
+			</div>
+			<div class="selected_store">
+				<input type="checkbox" name="store" value="windowsPhoneStore" > Windows Phone Store
+			</div>
+		</div>
+</template>
+
+<!--Template for Icon-filtering-->
+<template name="iconFiltering">
+		<div class="icon group">
+			<h3>Filtering-Icons:</h3>
+			<div class="selected_icon">
+				
+				<p>Sensors and technologies:</p>
+				
+				<button title="Motion sensors" id="motion">{{#if motionSensors}}<img src='/IconMotionSensors.png' width="30" height="30">{{/if}}{{#unless motionSensors}}<img src='/IconMotionSensors_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Touchscreen" id="touch">{{#if touchscreen}}<img src='/IconTouchscreen.png' width="30" height="30">{{/if}}{{#unless touchscreen}}<img src='/IconTouchscreen_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Microphone" id="mic">{{#if microphone}}<img src='/IconMicrophone.png' width="30" height="30">{{/if}}{{#unless microphone}}<img src='/IconMicrophone_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Proximity sensor" id="prox">{{#if proximitySensor}}<img src='/IconProximitySensor.png' width="30" height="30">{{/if}}{{#unless proximitySensor}}<img src='/IconProximitySensor_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				
+				<p>Gestures:</p>
+				
+				<button title="Tap" id="tap">{{#if tap}}<img src='/IconTap.png' width="30" height="30">{{/if}}{{#unless tap}}<img src='/IconTap_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Drag" id="drag">{{#if drag}}<img src='/IconDrag.png' width="30" height="30">{{/if}}{{#unless drag}}<img src='/IconDrag_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Flick" id="flick">{{#if flick}}<img src='/IconFlick.png' width="30" height="30">{{/if}}{{#unless flick}}<img src='/IconFlick_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Tilt" id="tilt">{{#if tilt}}<img src='/IconTilt.png' width="30" height="30">{{/if}}{{#unless tilt}}<img src='/IconTilt_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Shake" id="shake">{{#if shake}}<img src='/IconShake.png' width="30" height="30">{{/if}}{{#unless shake}}<img src='/IconShake_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Pan" id="pan">{{#if pan}}<img src='/IconPan.png' width="30" height="30">{{/if}}{{#unless pan}}<img src='/IconPan_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Wave" id="touch">{{#if wave}}<img src='/IconWave.png' width="30" height="30">{{/if}}{{#unless wave}}<img src='/IconWave_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				
+				<p>Parts of the body:</p>
+				
+				<button title="One or two arms" id="arms">{{#if arms}}<img src='/IconArms.png' width="30" height="30">{{/if}}{{#unless arms}}<img src='/IconArms_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="One hand" id="hand">{{#if oneHand}}<img src='/IconOneHand.png' width="30" height="30">{{/if}}{{#unless oneHand}}<img src='/IconOneHand_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Two hands" id="hands">{{#if twoHands}}<img src='/IconTwoHands.png' width="30" height="30">{{/if}}{{#unless twoHands}}<img src='/IconTwoHands_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				
+				<p>Senses and abilities:</p>
+				
+				<button title="Vision" id="vision">{{#if vision}}<img src='/IconVision.png' width="30" height="30">{{/if}}{{#unless vision}}<img src='/IconVision_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Hearing" id="hearing">{{#if hearing}}<img src='/IconHearing.png' width="30" height="30">{{/if}}{{#unless hearing}}<img src='/IconHearing_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Speaking" id="speaking">{{#if speaking}}<img src='/IconSpeaking.png' width="30" height="30">{{/if}}{{#unless speaking}}<img src='/IconSpeaking_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				
+				<p>Positions of the user:</p>
+				
+				<button title="Standing" id="standing">{{#if standing}}<img src='/IconStanding.png' width="30" height="30">{{/if}}{{#unless standing}}<img src='/IconStanding_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Sitting" id="sitting">{{#if sitting}}<img src='/IconSitting.png' width="30" height="30">{{/if}}{{#unless sitting}}<img src='/IconSitting_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Lying" id="lying">{{#if lying}}<img src='/IconLying.png' width="30" height="30">{{/if}}{{#unless lying}}<img src='/IconLying_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				
+				<p>Positions of the device:</p>
+				
+				<button title="Horizontal" id="hor">{{#if horizontal}}<img src='/IconHorizontal.png' width="30" height="30">{{/if}}{{#unless horizontal}}<img src='/IconHorizontal_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Vertical" id="vert">{{#if vertical}}<img src='/IconVertical.png' width="30" height="30">{{/if}}{{#unless vertical}}<img src='/IconVertical_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				
+			</div>
+		</div>
+</template>
+
