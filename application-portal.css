@@ -1,0 +1,115 @@
+/* CSS declarations go here */
+body {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+#full-container{
+	width: 100%;
+	height: auto;
+	min-height: 100%;
+}
+#container{
+	width: 1024px;
+	margin: 0px auto;
+}
+#header{
+	width: 1024px;
+	height: 220px;
+	margin: 10px;
+	position: relative;
+	border: 5px solid grey;
+}
+#logo{
+	position: relative;
+	float: left;
+	width: 200px;
+	height: 200px;
+	margin: 5px;
+}
+#heading{
+	position: relative;
+	float: left;
+	font-size: medium;
+	text-align: center;
+	margin: 5px;
+}
+h1{
+	font-size: large;
+}
+#search-box{
+	position: relative;
+	float: right;
+	width: 400px;
+	height: 40px;
+	margin-top: 10px;
+}
+
+#content{
+	position: relative;
+	width: 1024px;
+	height: 0px auto;
+	margin: 10px;
+	border: 2px solid grey;
+}
+#filterblock{
+	float: left;
+	width: 230px;
+	height: 0px auto;
+	border: 5px solid grey;
+}
+#stores{
+	margin: 5px;
+}
+#icons{
+	margin: 5px;
+}
+#selected_icon{
+
+}
+
+#app-block{
+	position: absolute;
+	top: 5px;
+	left: 250px;
+	border: 5px solid grey;
+}
+h4{
+	margin: 0px;
+}
+#sorting{
+	position: absolute;
+	top: 0px;
+	left: 700px;
+}
+#appList{
+	position: absolute;
+	top: 45px;
+	left: 0px;
+	width: 780px;
+	height: 0px auto;
+	border: 5px solid blue;
+}
+.apps{
+	position: relative;
+	float: left;
+	width: 150px;
+	height: 250px;
+	margin: 2px;
+	border: 5px solid grey;
+
+}
+.appIcon{
+	position: relative;
+	width: 130px;
+	height: 130px;
+	margin: 5px 8px 5px 8px;
+	border: 2px solid red;
+}
+.appDetails{
+	position: relative;
+	float: left;
+	width: 130px;
+	height: 115px;
+}
