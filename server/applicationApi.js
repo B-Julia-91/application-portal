@@ -5,7 +5,7 @@ Meteor.methods({
 	
 		//PLAY STORE API
 	
-		var apiKey = 'f08acdc46934d92737d0c5e3207b5db6';	//individual API key
+		var apiKey = 'af6d0df9df2904e8da45b2d2ea2c0f3b';	//individual API key
 		var app = "test"//itemID;									//for APP INFO API: package ID of the requested application, which is the same like the itemID of the results of the SEARCH API
 		var category = 'apps';								//for now we only use the category "apps", but there are the following categories for SEARCH API: "apps", "books", "movies" or "music"
 		//var keyword = searchfield;						//for SEARCH API
