@@ -123,12 +123,21 @@ Template.appList.helpers({
 
 		return AppCollection.find(filter)
 
-	}
+    },
+    editID: function(){
+	return Session.get("editID");
+    }
 });
 //Events
 Template.appList.events({
     
-    
+    "click #appEdit": function(){
+		Session.set("editID", true);
+    },
+    "click #editText": function(){
+		var editedName = $("appEdit").val();
+		AppCollection.update(Session.get("editID"), "editedName");
+	}
 });
 
 
