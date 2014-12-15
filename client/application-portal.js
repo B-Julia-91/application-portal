@@ -128,15 +128,52 @@ Template.appList.helpers({
 	return Session.get("editID");
     }
 });
+Template.appList.app = function(){AppCollection.find().fetch()};
+
 //Events
 Template.appList.events({
     
-    "click #appEdit": function(){
-		Session.set("editID", true);
-    },
-    "click #editText": function(){
-		var editedName = $("appEdit").val();
-		AppCollection.update(Session.get("editID"), "editedName");
+    	"click #appEdit": function(){
+		id = this._id;
+		if(Session.get("editID")){
+			return Session.set("editID", false)
+		}
+		else{
+			return Session.set("editID", true)
+		}
+    	},
+    	"keyup #editName": function (){
+		var editedName = $("#editName").val();
+		console.log(editedName);
+		AppCollection.update({_id: id}, {$set: {title: editedName}});
+	},
+	"keyup #editDeveloper": function (){
+		var editedDeveloper = $("#editDeveloper").val();
+		console.log(editedDeveloper);
+		AppCollection.update({_id: id}, {$set: {developer: editedDeveloper}});
+	},
+	"keyup #editRating": function (){
+		var editedRating = $("#editRating").val();
+		console.log(editedRating);
+		AppCollection.update({_id: id}, {$set: {developer: editedRating}});
+	},
+	"keyup #editClassification": function (){
+		var editedClassification = $("#editClassification").val();
+		console.log(editedClassifcation);
+		AppCollection.update({_id: id}, {$set: {classification: editedClassification}});
+	},
+	"keyup #editVideo": function (){
+		var editedVideo = $("#editVideo").val();
+		console.log(editedVideo);
+		AppCollection.update({_id: id}, {$set: {video: editedVideo}});
+	},
+	"keyup #editPrice": function (){
+		var editedPrice = $("#editPrice").val();
+		console.log(editedPrice);
+		AppCollection.update({_id: id}, {$set: {price: editedPrice}});
+	},
+	"click #appSave": function(){
+		return Session.set("editID", false);
 	}
 });
 
