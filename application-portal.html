@@ -60,16 +60,14 @@
 			{{appIcon}}
 		</div>
 		<div class="appDetails">
-			<!--name-->
-			{{#if editID}}<input type="text" id="editText" size="30" maxlength="120" class="appEdit">{{/if}}{{#unless title}}{{title}}{{/unless}}<br>
+		<!--name-->
+			{{#if editID}}<input type="text" id="editName" size="25" maxlength="50" class="appEdit" placeholder="Name">{{/if}}{{#unless editID}}{{title}}{{/unless}}<br>
 			<!--developer-->
-			{{developer}}<br>
+			{{#if editID}}<input type="text" id="editDeveloper" size="25" maxlength="50" class="appEdit" placeholder="Developer">{{/if}}{{#unless editID}}{{developer}}{{/unless}}<br>
 			<!--rating in stars, classification-->
-			{{rating}}
-			{{classification}}<br>
+			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}{{#if editID}}<input type="text" id="editClassification" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{classification}}{{/unless}}<br>
 			<!--link to video, price-->
-			{{video}}
-			{{price}}<br>
+			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}{{video}}{{/unless}}{{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
 			<!--filtering-icons-->
 			{{#if motionSensors}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}
 			{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}
