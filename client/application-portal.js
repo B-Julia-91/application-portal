@@ -131,9 +131,29 @@ Template.appList.helpers({
 });
 //Events
 Template.appList.events({
+    "click #appEdit": function(){
+		
+    },
     
-    	"click #appEdit": function(){
+});
+
+//App details
+//Helper 
+Template.appDetails.helpers({
+    editID: function(){
 		var appId = this._id;
+		var selectedApp = Session.get("selectedApp");
+			if(appId == selectedApp){
+					return true
+			}
+	}
+    
+});
+//Events
+Template.appDetails.events({
+   
+   	"click #appEdit": function(){
+	    var appId = this._id;
 		Session.set('selectedApp', appId);
 		if(Session.get("editID")){
 			return Session.set("editID", false)
@@ -175,6 +195,7 @@ Template.appList.events({
 	"click #appSave": function(){
 		return Session.set("editID", false);
 	}
+    
 });
 
 //Add new app
