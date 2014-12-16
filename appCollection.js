@@ -30,13 +30,14 @@ AppSchema = new SimpleSchema({
 	rating: {
 		type: Number,
 		label: "Rating",
+		decimal: true,
 		min: 1,
 		max: 5	
 	},
-	//Classification (application/game)
-	classification: {
+	//Classification/ category
+	category: {
 		type: String,
-		label: "Classification",
+		label: "Category",
 		min: 4,
 		max: 11
 	},
