@@ -25,7 +25,8 @@ Meteor.startup(function() {
 	Session.set("sitting", false);
 	Session.set("lying", false);
 	Session.set("horizontal", false);
-	Session.set("vertical", false)
+	Session.set("vertical", false);
+	Session.set("editID", false)
 });
 
 
@@ -128,13 +129,12 @@ Template.appList.helpers({
 	return Session.get("editID");
     }
 });
-Template.appList.app = function(){AppCollection.find().fetch()};
-
 //Events
 Template.appList.events({
     
     	"click #appEdit": function(){
-		id = this._id;
+		var appId = this._id;
+		Session.set('selectedApp', appId);
 		if(Session.get("editID")){
 			return Session.set("editID", false)
 		}
@@ -155,12 +155,12 @@ Template.appList.events({
 	"keyup #editRating": function (){
 		var editedRating = $("#editRating").val();
 		console.log(editedRating);
-		AppCollection.update({_id: id}, {$set: {developer: editedRating}});
+		AppCollection.update({_id: id}, {$set: {rating: editedRating}});
 	},
-	"keyup #editClassification": function (){
-		var editedClassification = $("#editClassification").val();
-		console.log(editedClassifcation);
-		AppCollection.update({_id: id}, {$set: {classification: editedClassification}});
+	"keyup #editCategory": function (){
+		var editedCategory = $("#editCategory").val();
+		console.log(editedCategory);
+		AppCollection.update({_id: id}, {$set: {category: editedCategory}});
 	},
 	"keyup #editVideo": function (){
 		var editedVideo = $("#editVideo").val();
@@ -177,6 +177,19 @@ Template.appList.events({
 	}
 });
 
+//Add new app
+//Helper 
+Template.appHeader.helpers({
+    
+    
+});
+//Events
+Template.appHeader.events({
+    "click #appAdd": function(){
+		AppCollection.insert({title: "Name your app", developer: "Choose a developer"});
+	}
+    
+});
 
 //Sorting
 //Helper 
