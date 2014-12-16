@@ -144,7 +144,7 @@ Template.appDetails.helpers({
 		var appId = this._id;
 		var selectedApp = Session.get("selectedApp");
 			if(appId == selectedApp){
-					return true
+					return
 			}
 	}
     
