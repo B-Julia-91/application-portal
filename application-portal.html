@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div id="app-block">
-			<h4>Applications:</h4>
+			{{>appHeader}}
 			<div id="sorting">
 				{{> sorting}}
 			</div>
@@ -50,25 +50,34 @@
 		</form>
 </template>
 
+<template name="appHeader">
+	<p>Applications:<input type="button" title="Add new application" id="appAdd" value="Add new" class="appAdd"></p>
+</template>
+
 <!--Template for the application container-->
 <template name="appList">
 	{{#each app}}
 	<div class="apps">
-		<input type="button" title="Add additional information" id="appEdit" value="+" class="appEdit" height="10px" width="10px">
+		{{#if editID}}<input type="button" title="Save additional information" id="appSave" value="Save" class="appSave">{{/if}}{{#unless editID}}<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">{{/unless}}
 		<div class="appIcon">
 			<!--icon-->
 			{{appIcon}}
 		</div>
 		<div class="appDetails">
-		<!--name-->
+			<!--name-->
 			{{#if editID}}<input type="text" id="editName" size="25" maxlength="50" class="appEdit" placeholder="Name">{{/if}}{{#unless editID}}{{title}}{{/unless}}<br>
 			<!--developer-->
 			{{#if editID}}<input type="text" id="editDeveloper" size="25" maxlength="50" class="appEdit" placeholder="Developer">{{/if}}{{#unless editID}}{{developer}}{{/unless}}<br>
-			<!--rating in stars, classification-->
-			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}{{#if editID}}<input type="text" id="editClassification" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{classification}}{{/unless}}<br>
+			<!--rating in stars, category-->
+			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}{{#if editID}}<input type="text" id="editCategory" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{category}}{{/unless}}<br>
 			<!--link to video, price-->
 			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}{{video}}{{/unless}}{{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
 			<!--filtering-icons-->
+			{{#if editID}}
+				<button title="Motion sensors" id="motion">{{#if motionSensors}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}{{#unless motionSensors}}<img src='/IconMotionSensors_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Touchscreen" id="touch">{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}{{#unless touchscreen}}<img src='/IconTouchscreen_deactive.png' width="25" height="25"/>{{/unless}}</button>
+			{{/if}}
+			{{#unless editID}}
 			{{#if motionSensors}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}
 			{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}
 			{{#if mirophone}}<img src='/IconMicrophone.png' width="25" height="25">{{/if}}
@@ -92,6 +101,7 @@
 			{{#if lying}}<img src='/IconLying.png' width="25" height="25">{{/if}}
 			{{#if horizontal}}<img src='/IconHorizontal.png' width="25" height="25">{{/if}}
 			{{#if vertical}}<img src='/IconVertical.png' width="25" height="25">{{/if}}
+			{{/unless}}
 		</div>	
 	</div>
 	{{/each}}
@@ -111,18 +121,12 @@
 
 <!--Template for Market-Store-Filtering-->
 <template name="storeFiltering">
-		<div class="stores group">
-			<h2>Market Store:</h2>
-			<div class="selected_store">
-				<input type="checkbox" name="store" value="googlePlayStore" > Google Play Store
-			</div>
-			<div class="selected_store">
-				<input type="checkbox" name="store" value="appStore" > iTunes App Store
-			</div>
-			<div class="selected_store">
-				<input type="checkbox" name="store" value="windowsPhoneStore" > Windows Phone Store
-			</div>
-		</div>
+		<p>Market Stores:</p>
+		<form class="storeFilter">
+				<input type="checkbox" name="store1" value="googlePlayStore" > Google Play Store <br>
+				<input type="checkbox" name="store2" value="appStore" > iTunes App Store <br>
+				<input type="checkbox" name="store3" value="windowsPhoneStore" > Windows Phone Store
+		</form>
 </template>
 
 <!--Template for Icon-filtering-->
