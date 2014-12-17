@@ -58,23 +58,29 @@
 <template name="appList">
 	{{#each app}}
 	<div class="apps">
-		{{#if editID}}<input type="button" title="Save additional information" id="appSave" value="Save" class="appSave">{{/if}}{{#unless editID}}<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">{{/unless}}
+		{{#if editID}}<input type="button" title="Ok" id="appSave" value="Ok" class="appSave">{{/if}}{{#unless editID}}<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">{{/unless}}
 		<div class="appIcon">
 			<!--icon-->
 			{{appIcon}}
 		</div>
-		<div class="appDetails">
+		{{> appDetails}}	
+	</div>
+	{{/each}}
+</template>
+
+<!--Template for the application details-->
+<template name="appDetails">
 			<!--name-->
 			{{#if editID}}<input type="text" id="editName" size="25" maxlength="50" class="appEdit" placeholder="Name">{{/if}}{{#unless editID}}{{title}}{{/unless}}<br>
 			<!--developer-->
 			{{#if editID}}<input type="text" id="editDeveloper" size="25" maxlength="50" class="appEdit" placeholder="Developer">{{/if}}{{#unless editID}}{{developer}}{{/unless}}<br>
 			<!--rating in stars, category-->
-			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}{{#if editID}}<input type="text" id="editCategory" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{category}}{{/unless}}<br>
+			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}  {{#if editID}}<input type="text" id="editCategory" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{category}}{{/unless}}<br>
 			<!--link to video, price-->
-			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}{{video}}{{/unless}}{{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
+			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}{{video}}{{/unless}}  {{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
 			<!--filtering-icons-->
 			{{#if editID}}
-				<button title="Motion sensors" id="motion">{{#if motionSensors}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}{{#unless motionSensors}}<img src='/IconMotionSensors_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Motion sensors" id="motionIcon">{{#if motionClicked}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}{{#unless motionClicked}}<img src='/IconMotionSensors_deactive.png' width="25" height="25"/>{{/unless}}</button>
 				<button title="Touchscreen" id="touch">{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}{{#unless touchscreen}}<img src='/IconTouchscreen_deactive.png' width="25" height="25"/>{{/unless}}</button>
 			{{/if}}
 			{{#unless editID}}
@@ -90,7 +96,7 @@
 			{{#if pan}}<img src='/IconPan.png' width="25" height="25">{{/if}}
 			{{#if wave}}<img src='/IconWave.png' width="25" height="25">{{/if}}
 			{{#if arms}}<img src='/IconArms.png' width="25" height="25">{{/if}}
-			{{#if oneHand}}<img src='/IconOneHand.png' width="25" height="25">{{/if}}
+			{{#if oneHand}}<img src='/IconHand.png' width="25" height="25">{{/if}}
 			{{#if twoHands}}<img src='/IconTwoHands.png' width="25" height="25">{{/if}}
 			{{#if finger}}<img src='/IconFinger.png' width="25" height="25">{{/if}}
 			{{#if vision}}<img src='/IconVision.png' width="25" height="25">{{/if}}
@@ -102,9 +108,6 @@
 			{{#if horizontal}}<img src='/IconHorizontal.png' width="25" height="25">{{/if}}
 			{{#if vertical}}<img src='/IconVertical.png' width="25" height="25">{{/if}}
 			{{/unless}}
-		</div>	
-	</div>
-	{{/each}}
 </template>
 
 <!--Template for the sorting field-->
@@ -150,13 +153,14 @@
 				<button title="Tilt" id="tilt">{{#if tilt}}<img src='/IconTilt.png' width="30" height="30">{{/if}}{{#unless tilt}}<img src='/IconTilt_deactive.png' width="30" height="30"/>{{/unless}}</button>
 				<button title="Shake" id="shake">{{#if shake}}<img src='/IconShake.png' width="30" height="30">{{/if}}{{#unless shake}}<img src='/IconShake_deactive.png' width="30" height="30"/>{{/unless}}</button>
 				<button title="Pan" id="pan">{{#if pan}}<img src='/IconPan.png' width="30" height="30">{{/if}}{{#unless pan}}<img src='/IconPan_deactive.png' width="30" height="30"/>{{/unless}}</button>
-				<button title="Wave" id="touch">{{#if wave}}<img src='/IconWave.png' width="30" height="30">{{/if}}{{#unless wave}}<img src='/IconWave_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="Wave" id="wave">{{#if wave}}<img src='/IconWave.png' width="30" height="30">{{/if}}{{#unless wave}}<img src='/IconWave_deactive.png' width="30" height="30"/>{{/unless}}</button>
 				
 				<p>Parts of the body:</p>
 				
 				<button title="One or two arms" id="arms">{{#if arms}}<img src='/IconArms.png' width="30" height="30">{{/if}}{{#unless arms}}<img src='/IconArms_deactive.png' width="30" height="30"/>{{/unless}}</button>
-				<button title="One hand" id="hand">{{#if oneHand}}<img src='/IconOneHand.png' width="30" height="30">{{/if}}{{#unless oneHand}}<img src='/IconOneHand_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="One hand" id="hand">{{#if oneHand}}<img src='/IconHand.png' width="30" height="30">{{/if}}{{#unless oneHand}}<img src='/IconHand_deactive.png' width="30" height="30"/>{{/unless}}</button>
 				<button title="Two hands" id="hands">{{#if twoHands}}<img src='/IconTwoHands.png' width="30" height="30">{{/if}}{{#unless twoHands}}<img src='/IconTwoHands_deactive.png' width="30" height="30"/>{{/unless}}</button>
+				<button title="One or more finger" id="finger">{{#if finger}}<img src='/IconFinger.png' width="30" height="30">{{/if}}{{#unless finger}}<img src='/IconFinger_deactive.png' width="30" height="30"/>{{/unless}}</button>
 				
 				<p>Senses and abilities:</p>
 				
@@ -178,4 +182,6 @@
 			</div>
 		</div>
 </template>
+
+
 
