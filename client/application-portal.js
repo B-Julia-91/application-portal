@@ -26,9 +26,9 @@ Meteor.startup(function() {
 	Session.set("lying", false);
 	Session.set("horizontal", false);
 	Session.set("vertical", false);
-	Session.set("editID", false)
+	Session.set("editID", false);
+	Session.set("motionClicked", false)
 });
-
 
 //Search field
 //Helper 
@@ -124,17 +124,21 @@ Template.appList.helpers({
 
 		return AppCollection.find(filter)
 
-    },
-    editID: function(){
-	return Session.get("editID");
-    }
+	},
+	editID: function(){
+		return Session.get("editID");
+	}
 });
 //Events
 Template.appList.events({
     "click #appEdit": function(){
-		
+		var appId = this._id;
+		Session.set("selectedApp", appId);
+		Session.set("editPressed", true);
     },
-    
+    "click #appSave": function(){
+		return Session.set("savePressed", true);
+	}
 });
 
 //App details
@@ -143,59 +147,62 @@ Template.appDetails.helpers({
     editID: function(){
 		var appId = this._id;
 		var selectedApp = Session.get("selectedApp");
-			if(appId == selectedApp){
-					return true
-			}
+		if(appId == selectedApp){
+			return true
+		}
+	},
+	motionClicked: function(){
+		return Session.get("motionClicked")
 	}
-    
 });
 //Events
 Template.appDetails.events({
-   
-   	"click #appEdit": function(){
-	    var appId = this._id;
-		Session.set('selectedApp', appId);
-		if(Session.get("editID")){
-			return Session.set("editID", false)
-		}
-		else{
-			return Session.set("editID", true)
-		}
-    	},
-    	"keyup #editName": function (){
+	
+    "keyup #editName": function (){
 		var editedName = $("#editName").val();
+		var appID = this._id;
 		console.log(editedName);
-		AppCollection.update({_id: id}, {$set: {title: editedName}});
+		console.log(appID);
+		AppCollection.update({_id: this._id}, {$set: {title: editedName}});
 	},
 	"keyup #editDeveloper": function (){
 		var editedDeveloper = $("#editDeveloper").val();
 		console.log(editedDeveloper);
-		AppCollection.update({_id: id}, {$set: {developer: editedDeveloper}});
+		AppCollection.update({_id: this._id}, {$set: {developer: editedDeveloper}});
 	},
 	"keyup #editRating": function (){
 		var editedRating = $("#editRating").val();
 		console.log(editedRating);
-		AppCollection.update({_id: id}, {$set: {rating: editedRating}});
+		AppCollection.update({_id: this._id}, {$set: {rating: editedRating}});
 	},
 	"keyup #editCategory": function (){
 		var editedCategory = $("#editCategory").val();
 		console.log(editedCategory);
-		AppCollection.update({_id: id}, {$set: {category: editedCategory}});
+		AppCollection.update({_id: this._id}, {$set: {category: editedCategory}});
 	},
 	"keyup #editVideo": function (){
 		var editedVideo = $("#editVideo").val();
 		console.log(editedVideo);
-		AppCollection.update({_id: id}, {$set: {video: editedVideo}});
+		AppCollection.update({_id: this._id}, {$set: {video: editedVideo}});
 	},
 	"keyup #editPrice": function (){
 		var editedPrice = $("#editPrice").val();
 		console.log(editedPrice);
-		AppCollection.update({_id: id}, {$set: {price: editedPrice}});
+		AppCollection.update({_id: this._id}, {$set: {price: editedPrice}});
 	},
-	"click #appSave": function(){
-		return Session.set("editID", false);
+	"click #motionIcon": function (){
+		console.log("Clicked");
+		if(Session.get("motionClicked")){
+			console.log("false")
+			AppCollection.update({_id: this._id}, {$set: {motionSensor: false}});
+			return Session.set("motionClicked", false)
+		}
+		else{
+			console.log("true")
+			AppCollection.update({_id: this._id}, {$set: {motionSensor: true}});
+			return Session.set("motionClicked", true)
+		}
 	}
-    
 });
 
 //Add new app
@@ -339,11 +346,11 @@ Template.iconFiltering.events({
 		}
 	},
 	"click #prox": function(){
-		if(Session.get("proximity")){
-			return Session.set("proximity", false)
+		if(Session.get("proximitySensor")){
+			return Session.set("proximitySensor", false)
 		}
 		else{
-			return Session.set("proximity", true)
+			return Session.set("proximitySensor", true)
 		}
 	},
 	"click #tap": function(){
