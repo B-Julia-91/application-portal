@@ -58,11 +58,9 @@
 <template name="appList">
 	{{#each app}}
 	<div class="apps">
-		{{#if editID}}<input type="button" title="Ok" id="appSave" value="Ok" class="appSave">{{/if}}{{#unless editID}}<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">{{/unless}}
-		<div class="appIcon">
-			<!--icon-->
-			{{appIcon}}
-		</div>
+		<!--{{#if editID}}<input type="button" title="Ok" id="appSave" value="Ok" class="appSave">{{/if}}{{#unless editID}}<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">{{/unless}}-->
+		<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">
+		<input type="button" title="Ok" id="appSave" value="Ok" class="appSave">
 		{{> appDetails}}	
 	</div>
 	{{/each}}
@@ -70,6 +68,11 @@
 
 <!--Template for the application details-->
 <template name="appDetails">
+		<div class="appIcon">
+			<!--icon-->
+			{{appIcon}}
+		</div>
+		<div class="appDetail">
 			<!--name-->
 			{{#if editID}}<input type="text" id="editName" size="25" maxlength="50" class="appEdit" placeholder="Name">{{/if}}{{#unless editID}}{{title}}{{/unless}}<br>
 			<!--developer-->
@@ -78,36 +81,64 @@
 			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}  {{#if editID}}<input type="text" id="editCategory" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{category}}{{/unless}}<br>
 			<!--link to video, price-->
 			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}{{video}}{{/unless}}  {{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
+		</div>
+		<div class="appFilteringIcons">
 			<!--filtering-icons-->
 			{{#if editID}}
-				<button title="Motion sensors" id="motionIcon">{{#if motionClicked}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}{{#unless motionClicked}}<img src='/IconMotionSensors_deactive.png' width="25" height="25"/>{{/unless}}</button>
-				<button title="Touchscreen" id="touch">{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}{{#unless touchscreen}}<img src='/IconTouchscreen_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Motion sensors" id="motionIcon">{{#if motionClicked}}<img src='/IconMotionSensors.png' width="15" height="15">{{/if}}{{#unless motionClicked}}<img src='/IconMotionSensors_deactive.png' width="15" height="15"/>{{/unless}}</button>
+				<button title="Touchscreen" id="touchIcon">{{#if touchClicked}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}{{#unless touchClicked}}<img src='/IconTouchscreen_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Microphone" id="micIcon">{{#if micClicked}}<img src='/IconMicrophone.png' width="25" height="25">{{/if}}{{#unless micClicked}}<img src='/IconMicrophone_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Proximity sensor" id="proxIcon">{{#if proxClicked}}<img src='/IconProximitySensor.png' width="25" height="25">{{/if}}{{#unless proxClicked}}<img src='/IconProximitySensor_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Tap" id="tapIcon">{{#if tapClicked}}<img src='/IconTap.png' width="25" height="25">{{/if}}{{#unless tapClicked}}<img src='/IconTap_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Drag" id="dragIcon">{{#if dragClicked}}<img src='/IconDrag.png' width="25" height="25">{{/if}}{{#unless dragClicked}}<img src='/IconDrag_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Flick" id="flickIcon">{{#if flickClicked}}<img src='/IconFlick.png' width="25" height="25">{{/if}}{{#unless flickClicked}}<img src='/IconFlick_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Tilt" id="tiltIcon">{{#if tiltClicked}}<img src='/IconTilt.png' width="25" height="25">{{/if}}{{#unless tiltClicked}}<img src='/IconTilt_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Shake" id="shakeIcon">{{#if shakeClicked}}<img src='/IconShake.png' width="25" height="25">{{/if}}{{#unless shakeClicked}}<img src='/IconShake_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Pan" id="panIcon">{{#if panClicked}}<img src='/IconPan.png' width="25" height="25">{{/if}}{{#unless panClicked}}<img src='/IconPan_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Wave" id="waveIcon">{{#if waveClicked}}<img src='/IconWave.png' width="25" height="25">{{/if}}{{#unless waveClicked}}<img src='/IconWave_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="One or two arms" id="armsIcon">{{#if armsClicked}}<img src='/IconArms.png' width="25" height="25">{{/if}}{{#unless armsClicked}}<img src='/IconArms_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="One hand" id="handIcon">{{#if handClicked}}<img src='/IconHand.png' width="25" height="25">{{/if}}{{#unless handClicked}}<img src='/IconHand_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Two hands" id="handsIcon">{{#if handsClicked}}<img src='/IconTwoHands.png' width="25" height="25">{{/if}}{{#unless handsClicked}}<img src='/IconTwoHands_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="One or more finger" id="fingerIcon">{{#if fingerClicked}}<img src='/IconFinger.png' width="25" height="25">{{/if}}{{#unless fingerClicked}}<img src='/IconFinger_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Vision" id="visionIcon">{{#if visionClicked}}<img src='/IconVision.png' width="25" height="25">{{/if}}{{#unless visionClicked}}<img src='/IconVision_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Hearing" id="hearingIcon">{{#if hearingClicked}}<img src='/IconHearing.png' width="25" height="25">{{/if}}{{#unless hearingClicked}}<img src='/IconHearing_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Speaking" id="speakingIcon">{{#if speakingClicked}}<img src='/IconSpeaking.png' width="25" height="25">{{/if}}{{#unless speakingClicked}}<img src='/IconSpeaking_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Standing" id="standingIcon">{{#if standingClicked}}<img src='/IconStanding.png' width="25" height="25">{{/if}}{{#unless standingClicked}}<img src='/IconStanding_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Sitting" id="sittingIcon">{{#if sittingClicked}}<img src='/IconSitting.png' width="25" height="25">{{/if}}{{#unless sittingClicked}}<img src='/IconSitting_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Lying" id="lyingIcon">{{#if lyingClicked}}<img src='/IconLying.png' width="25" height="25">{{/if}}{{#unless lyingClicked}}<img src='/IconLying_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Horizontal" id="horIcon">{{#if horClicked}}<img src='/IconHorizontal.png' width="25" height="25">{{/if}}{{#unless horClicked}}<img src='/IconHorizontal_deactive.png' width="25" height="25"/>{{/unless}}</button>
+				<button title="Vertical" id="vertIcon">{{#if vertClicked}}<img src='/IconVertical.png' width="25" height="25">{{/if}}{{#unless vertClicked}}<img src='/IconVertical_deactive.png' width="25" height="25"/>{{/unless}}</button>
 			{{/if}}
 			{{#unless editID}}
-			{{#if motionSensors}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}
-			{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}
-			{{#if mirophone}}<img src='/IconMicrophone.png' width="25" height="25">{{/if}}
-			{{#if proximitySensor}}<img src='/IconProximitySensor.png' width="25" height="25">{{/if}}
-			{{#if tap}}<img src='/IconTap.png' width="25" height="25">{{/if}}
-			{{#if drag}}<img src='/IconDrag.png' width="25" height="25">{{/if}}
-			{{#if flick}}<img src='/IconFlick.png' width="25" height="25">{{/if}}
-			{{#if tilt}}<img src='/IconTilt.png' width="25" height="25">{{/if}}
-			{{#if shake}}<img src='/IconShake.png' width="25" height="25">{{/if}}
-			{{#if pan}}<img src='/IconPan.png' width="25" height="25">{{/if}}
-			{{#if wave}}<img src='/IconWave.png' width="25" height="25">{{/if}}
-			{{#if arms}}<img src='/IconArms.png' width="25" height="25">{{/if}}
-			{{#if oneHand}}<img src='/IconHand.png' width="25" height="25">{{/if}}
-			{{#if twoHands}}<img src='/IconTwoHands.png' width="25" height="25">{{/if}}
-			{{#if finger}}<img src='/IconFinger.png' width="25" height="25">{{/if}}
-			{{#if vision}}<img src='/IconVision.png' width="25" height="25">{{/if}}
-			{{#if hearing}}<img src='/IconHearing.png' width="25" height="25">{{/if}}
-			{{#if speaking}}<img src='/IconSpeaking.png' width="25" height="25">{{/if}}
-			{{#if standing}}<img src='/IcoStanding.png' width="25" height="25">{{/if}}
-			{{#if sitting}}<img src='/IconSitting.png' width="25" height="25">{{/if}}
-			{{#if lying}}<img src='/IconLying.png' width="25" height="25">{{/if}}
-			{{#if horizontal}}<img src='/IconHorizontal.png' width="25" height="25">{{/if}}
-			{{#if vertical}}<img src='/IconVertical.png' width="25" height="25">{{/if}}
+				{{#if motionSensors}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}
+				{{#if touchscreen}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}
+				{{#if microphone}}<img src='/IconMicrophone.png' width="25" height="25">{{/if}}
+				{{#if proximitySensor}}<img src='/IconProximitySensor.png' width="25" height="25">{{/if}}
+				{{#if tap}}<img src='/IconTap.png' width="25" height="25">{{/if}}
+				{{#if drag}}<img src='/IconDrag.png' width="25" height="25">{{/if}}
+				{{#if flick}}<img src='/IconFlick.png' width="25" height="25">{{/if}}
+				{{#if tilt}}<img src='/IconTilt.png' width="25" height="25">{{/if}}
+				{{#if shake}}<img src='/IconShake.png' width="25" height="25">{{/if}}
+				{{#if pan}}<img src='/IconPan.png' width="25" height="25">{{/if}}
+				{{#if wave}}<img src='/IconWave.png' width="25" height="25">{{/if}}
+				{{#if arms}}<img src='/IconArms.png' width="25" height="25">{{/if}}
+				{{#if oneHand}}<img src='/IconHand.png' width="25" height="25">{{/if}}
+				{{#if twoHands}}<img src='/IconTwoHands.png' width="25" height="25">{{/if}}
+				{{#if finger}}<img src='/IconFinger.png' width="25" height="25">{{/if}}
+				{{#if vision}}<img src='/IconVision.png' width="25" height="25">{{/if}}
+				{{#if hearing}}<img src='/IconHearing.png' width="25" height="25">{{/if}}
+				{{#if speaking}}<img src='/IconSpeaking.png' width="25" height="25">{{/if}}
+				{{#if standing}}<img src='/IcoStanding.png' width="25" height="25">{{/if}}
+				{{#if sitting}}<img src='/IconSitting.png' width="25" height="25">{{/if}}
+				{{#if lying}}<img src='/IconLying.png' width="25" height="25">{{/if}}
+				{{#if horizontal}}<img src='/IconHorizontal.png' width="25" height="25">{{/if}}
+				{{#if vertical}}<img src='/IconVertical.png' width="25" height="25">{{/if}}
 			{{/unless}}
+		</div>
+		<div class="appLinkStore">
+			<!--link to the market stores-->
+			{{#if editID}}<input type="text" id="editLink" size="25" maxlength="150" class="appEdit" placeholder="Link to market stores">{{/if}}
+		</div>
 </template>
 
 <!--Template for the sorting field-->
@@ -182,6 +213,7 @@
 			</div>
 		</div>
 </template>
+
 
 
 
