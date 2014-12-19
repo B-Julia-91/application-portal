@@ -1,12 +1,3 @@
-//DELETE METHOD, REMOVE LATER!
-Meteor.startup(function() {
-	return Meteor.methods({
-		removeAllApps: function() {
-			return AppCollection.remove({});
-		}
-    });
-});
-
 //Schema for the presentation of the applications
 AppSchema = new SimpleSchema({
 	//Icon (cover) of the application
@@ -34,16 +25,15 @@ AppSchema = new SimpleSchema({
 		min: 1,
 		max: 5	
 	},
-	//Classification/ category
+	//Classification/Category
 	category: {
 		type: String,
 		label: "Category",
-		min: 4,
-		max: 11
+		max: 100
 	},
 	//Link to a video (optional)
 	video: {
-		type: String,
+		type: [String],
 		label: "Video:",
 		optional: true
 	},
@@ -54,7 +44,7 @@ AppSchema = new SimpleSchema({
 		decimal: true,		//allows non-integer
 		optional: true
 	},
-	//Filtering-Icons
+	//Tag-Icons
 	//Sensors and technologies
 	motionSensors: {
 		type: Boolean
@@ -129,8 +119,19 @@ AppSchema = new SimpleSchema({
 	},
 	vertical: {
 		type: Boolean
+	},
+	//Link to the market store
+	link: {
+		type: String,
+		label: "Link",
+		max: 200
+	},
+	//Market Stores, where the application is offered
+	mStores: {
+		type: [String],
+		label: "Market Stores",
 	}
 });
 
 //New MongoDB collection
-AppCollection = new Meteor.Collection('appCollection', AppSchema);
+AppCollection = new Meteor.Collection("appCollection", AppSchema);
