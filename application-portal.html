@@ -58,7 +58,6 @@
 <template name="appList">
 	{{#each app}}
 	<div class="apps">
-		<!--{{#if editID}}<input type="button" title="Ok" id="appSave" value="Ok" class="appSave">{{/if}}{{#unless editID}}<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">{{/unless}}-->
 		<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">
 		<input type="button" title="Ok" id="appSave" value="Ok" class="appSave">
 		{{> appDetails}}	
@@ -68,10 +67,12 @@
 
 <!--Template for the application details-->
 <template name="appDetails">
+		{{#unless editID}}
 		<div class="appIcon">
 			<!--icon-->
 			{{appIcon}}
 		</div>
+		{{/unless}}
 		<div class="appDetail">
 			<!--name-->
 			{{#if editID}}<input type="text" id="editName" size="25" maxlength="50" class="appEdit" placeholder="Name">{{/if}}{{#unless editID}}{{title}}{{/unless}}<br>
@@ -85,7 +86,7 @@
 		<div class="appFilteringIcons">
 			<!--filtering-icons-->
 			{{#if editID}}
-				<button title="Motion sensors" id="motionIcon">{{#if motionClicked}}<img src='/IconMotionSensors.png' width="15" height="15">{{/if}}{{#unless motionClicked}}<img src='/IconMotionSensors_deactive.png' width="15" height="15"/>{{/unless}}</button>
+				<button title="Motion sensors" id="motionIcon">{{#if motionClicked}}<img src='/IconMotionSensors.png' width="25" height="25">{{/if}}{{#unless motionClicked}}<img src='/IconMotionSensors_deactive.png' width="25" height="25"/>{{/unless}}</button>
 				<button title="Touchscreen" id="touchIcon">{{#if touchClicked}}<img src='/IconTouchscreen.png' width="25" height="25">{{/if}}{{#unless touchClicked}}<img src='/IconTouchscreen_deactive.png' width="25" height="25"/>{{/unless}}</button>
 				<button title="Microphone" id="micIcon">{{#if micClicked}}<img src='/IconMicrophone.png' width="25" height="25">{{/if}}{{#unless micClicked}}<img src='/IconMicrophone_deactive.png' width="25" height="25"/>{{/unless}}</button>
 				<button title="Proximity sensor" id="proxIcon">{{#if proxClicked}}<img src='/IconProximitySensor.png' width="25" height="25">{{/if}}{{#unless proxClicked}}<img src='/IconProximitySensor_deactive.png' width="25" height="25"/>{{/unless}}</button>
@@ -128,7 +129,7 @@
 				{{#if vision}}<img src='/IconVision.png' width="25" height="25">{{/if}}
 				{{#if hearing}}<img src='/IconHearing.png' width="25" height="25">{{/if}}
 				{{#if speaking}}<img src='/IconSpeaking.png' width="25" height="25">{{/if}}
-				{{#if standing}}<img src='/IcoStanding.png' width="25" height="25">{{/if}}
+				{{#if standing}}<img src='/IconStanding.png' width="25" height="25">{{/if}}
 				{{#if sitting}}<img src='/IconSitting.png' width="25" height="25">{{/if}}
 				{{#if lying}}<img src='/IconLying.png' width="25" height="25">{{/if}}
 				{{#if horizontal}}<img src='/IconHorizontal.png' width="25" height="25">{{/if}}
@@ -213,6 +214,7 @@
 			</div>
 		</div>
 </template>
+
 
 
 
