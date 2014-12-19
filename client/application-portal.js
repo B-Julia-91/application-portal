@@ -1,6 +1,6 @@
 //Client
 
-//sets the filtering-icons to false in the beginning
+//sets the global variables to false at the beginning
 Meteor.startup(function() {					
 	
 	Session.set("motionSensors", false);
@@ -31,19 +31,34 @@ Meteor.startup(function() {
 //Search field
 //Helper 
 Template.searchField.helpers({
-    
-    
-    
+    test: function(){
+		var keyword = Session.get("enteredKeyword");
+		return AppCollection.find({title: keyword}).fetch();
+    }
 });
 //Events
 Template.searchField.events({
 	"click #sb": function(){
 		var keyword = $("#sf").val();
-		console.log(keyword);
+		console.log("Entered keyword: ", keyword);
 		Meteor.call('invokeAPI', keyword);
+		return [Session.set("sbPressed", true), Session.set("enteredKeyword", keyword)];
     }
 });
 
+//Add new app
+//Helper 
+Template.appHeader.helpers({
+    
+    
+});
+//Events
+Template.appHeader.events({
+    "click #appAdd": function(){
+		AppCollection.insert({title: "Name your app", developer: "Choose a developer", rating: 1, category: "Choose a category", video: "Link to a video", price: "", motionSensor: false, touchscreen: false, microphone: false, proximitySensor: false, tap: false, drag: false, flick: false, tilt: false, shake: false, pan: false, wave: false, arms: false, oneHand: false, twoHands: false, finger: false, vision: false, hearing: false, speaking: false, standing: false, sitting: false, lying: false, horizontal: false, vertical: false});
+	}
+    
+});
 
 //Application container
 //Helper 
@@ -119,10 +134,21 @@ Template.appList.helpers({
 		if(Session.get("vertical")){
 			filter.vertical= true
 		}
+		if(Session.get("sbPressed")){
+			var appTitleArray = AppCollection.find({}).fetch();
+			var keyword = Session.get("enteredKeyword");
+			var distinctArray = _.uniq(appTitleArray, false, function(d) {return d.title});
+			var distinctValue = _.pluck(distinctArray, 'title');
+			console.log("The array of titles: ", distinctValue);
+			for(var i=0; i<distinctValue.length; i++){
+				console.log("The whateverthisis: ", distinctValue[i]);
+				if(distinctValue[i].match(keyword)){
+					console.log("These are the matching titles: ", distinctValue[i]);
+					filter.title= distinctValue[i];
+				}
+			}
+		}
 		return AppCollection.find(filter)
-	},
-	editID: function(){
-		return Session.get("editID");
 	}
 });
 //Events
@@ -145,7 +171,7 @@ Template.appDetails.helpers({
 		var appId = this._id;
 		var selectedApp = Session.get("selectedApp");
 		if(appId == selectedApp){
-			console.log("Aufruf der editID")
+			console.log("Set editID to true")
 			return true
 		}
 		else return false
@@ -226,33 +252,32 @@ Template.appDetails.events({
     "keyup #editName": function (){
 		var editedName = $("#editName").val();
 		var appId = this._id;
-		console.log(editedName, " ", appId);
+		console.log("Modified name: ", editedName, " has the appId ", appId);
 		AppCollection.update({_id: this._id}, {$set: {title: editedName}});
-		return Session.set("editID", false)
 	},
 	"keyup #editDeveloper": function (){
 		var editedDeveloper = $("#editDeveloper").val();
-		console.log(editedDeveloper);
+		console.log("Modified developer: ", editedDeveloper);
 		AppCollection.update({_id: this._id}, {$set: {developer: editedDeveloper}});
 	},
 	"keyup #editRating": function (){
 		var editedRating = $("#editRating").val();
-		console.log(editedRating);
+		console.log("Modified rating: ", editedRating);
 		AppCollection.update({_id: this._id}, {$set: {rating: editedRating}});
 	},
 	"keyup #editCategory": function (){
 		var editedCategory = $("#editCategory").val();
-		console.log(editedCategory);
+		console.log("Modified category: ", editedCategory);
 		AppCollection.update({_id: this._id}, {$set: {category: editedCategory}});
 	},
 	"keyup #editVideo": function (){
 		var editedVideo = $("#editVideo").val();
-		console.log(editedVideo);
+		console.log("Modified URL to the video: ", editedVideo);
 		AppCollection.update({_id: this._id}, {$set: {video: editedVideo}});
 	},
 	"keyup #editPrice": function (){
 		var editedPrice = $("#editPrice").val();
-		console.log(editedPrice);
+		console.log("Modified price: ", editedPrice);
 		AppCollection.update({_id: this._id}, {$set: {price: editedPrice}});
 	},
 	"click #motionIcon": function (){
@@ -536,20 +561,6 @@ Template.appDetails.events({
 		console.log(editedLink);
 		AppCollection.update({_id: this._id}, {$set: {link: editedLink}});
 	}
-});
-
-//Add new app
-//Helper 
-Template.appHeader.helpers({
-    
-    
-});
-//Events
-Template.appHeader.events({
-    "click #appAdd": function(){
-		AppCollection.insert({title: "Name your app", developer: "Choose a developer", rating: 1, category: "Choose a category", video: "Link to a video", price: "", motionSensor: false, touchscreen: false, microphone: false, proximitySensor: false, tap: false, drag: false, flick: false, tilt: false, shake: false, pan: false, wave: false, arms: false, oneHand: false, twoHands: false, finger: false, vision: false, hearing: false, speaking: false, standing: false, sitting: false, lying: false, horizontal: false, vertical: false});
-	}
-    
 });
 
 //Sorting
@@ -839,10 +850,6 @@ Template.iconFiltering.events({
 		}
 	}  
 });
-
-
-
-
 
 
 
