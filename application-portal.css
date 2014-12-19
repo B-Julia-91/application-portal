@@ -127,6 +127,18 @@ h1{
 	margin: 2px;
 	border: 1px solid grey;
 }
+#editRating{
+	float: left;
+}
+#editCategory{
+	float: right;
+}
+#editVideo{
+	float: left;
+}
+#editPrice{
+	float: right;
+}
 .appFilteringIcons{
 	margin: 2px;
 	border: 1px solid grey;
@@ -135,4 +147,3 @@ h1{
 	margin: 2px;
 	border: 1px solid grey;
 }
-
