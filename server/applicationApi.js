@@ -11,7 +11,7 @@ Meteor.methods({
 		var urlSearch = 'http://api.playstoreapi.com/v1.1/search/' + appCategory + '/' + keyword + '?key=' + apiKey;
 		console.log("Es wird gesucht");
 		
-		/*HTTP.get(urlSearch, {params: {}}, function(error,appDetails){
+		HTTP.get(urlSearch, {params: {}}, function(error,appDetails){
 			if(!error){
 				console.log(appDetails.data);
 				for(var i=0; i<1; i++){
@@ -33,6 +33,6 @@ Meteor.methods({
 					});
 				}
 			}
-		});*/
+		});
 	}
 });
