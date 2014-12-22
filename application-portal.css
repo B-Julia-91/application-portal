@@ -110,7 +110,6 @@ h1{
 }
 #appDetails{
 	position: relative;
-	float: left;
 	width: 0px auto;
 	height: 0px auto;
 	margin: 5px;
@@ -127,23 +126,14 @@ h1{
 	margin: 2px;
 	border: 1px solid grey;
 }
-#editRating{
-	float: left;
-}
-#editCategory{
-	float: right;
-}
-#editVideo{
-	float: left;
-}
-#editPrice{
-	float: right;
-}
 .appFilteringIcons{
-	margin: 2px;
+	margin: 1px;
 	border: 1px solid grey;
 }
 .appLinkStore{
 	margin: 2px;
 	border: 1px solid grey;
+}
+.selected{
+	background-color: yellow;
 }
