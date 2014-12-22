@@ -26,15 +26,13 @@ Meteor.startup(function() {
 	Session.set("lying", false);
 	Session.set("horizontal", false);
 	Session.set("vertical", false);
+	Session.set("editPressed", false);
 });
 
 //Search field
 //Helper 
 Template.searchField.helpers({
-    test: function(){
-		var keyword = Session.get("enteredKeyword");
-		return AppCollection.find({title: keyword}).fetch();
-    }
+
 });
 //Events
 Template.searchField.events({
@@ -138,21 +136,33 @@ Template.appList.helpers({
 			var keyword = Session.get("enteredKeyword")
 			matchingTitle = new RegExp(keyword,"i");
 			filter.title = {$regex: matchingTitle}
-			console.log("Entries of the filter: ", filter)
-			
+			console.log("Entries of the filter", filter)
 		}
 		return AppCollection.find(filter)
 	}
 });
 //Events
 Template.appList.events({
+	"click .apps": function(){
+		if(Session.get("editPressed")){
+			console.log("App clicked in edit-mode");
+		}
+		else if(Session.get("savePressed")){
+			console.log("Ok-button clicked");
+		}
+		else{
+			console.log("App clicked");
+			var appId = this._id;
+			return [Session.set("clickedApp", appId), Session.set("appClicked")];
+		}
+	},
     "click #appEdit": function(){
 		var appId = this._id;
 		console.log("Edit pressed")
-		Session.set("selectedApp", appId);
+		return [Session.set("selectedApp", appId), Session.set("editPressed", true)];
     },
     "click #appSave": function(){
-		return Session.set("selectedApp", false);
+		return [Session.set("selectedApp", false), Session.set("editPressed", false), Session.set("savePressed", true)];
 	}
 });
 
@@ -168,6 +178,13 @@ Template.appDetails.helpers({
 			return true
 		}
 		else return false
+	},
+	appClicked: function(){
+		var appId = this._id;
+		var clickedApp = Session.get("clickedApp");
+		if(appId == clickedApp){
+			return console.log("Clicked here")
+		}
 	},
 	motionClicked: function(){
 		return Session.get("motionClicked")
