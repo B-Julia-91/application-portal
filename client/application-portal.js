@@ -135,18 +135,11 @@ Template.appList.helpers({
 			filter.vertical= true
 		}
 		if(Session.get("sbPressed")){
-			var appTitleArray = AppCollection.find({}).fetch();
-			var keyword = Session.get("enteredKeyword");
-			var distinctArray = _.uniq(appTitleArray, false, function(d) {return d.title});
-			var distinctValue = _.pluck(distinctArray, 'title');
-			console.log("The array of titles: ", distinctValue);
-			for(var i=0; i<distinctValue.length; i++){
-				console.log("The whateverthisis: ", distinctValue[i]);
-				if(distinctValue[i].match(keyword)){
-					console.log("These are the matching titles: ", distinctValue[i]);
-					filter.title= distinctValue[i];
-				}
-			}
+			var keyword = Session.get("enteredKeyword")
+			matchingTitle = new RegExp(keyword,"i");
+			filter.title = {$regex: matchingTitle}
+			console.log("Entries of the filter: ", filter)
+			
 		}
 		return AppCollection.find(filter)
 	}
