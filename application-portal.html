@@ -70,7 +70,7 @@
 		{{#unless editID}}
 		<div class="appIcon">
 			<!--icon-->
-			{{appIcon}}
+			<img src="{{appIcon}}" alt="appIcon" width="130px" height="130px">
 		</div>
 		{{/unless}}
 		<div class="appDetail">
@@ -81,7 +81,7 @@
 			<!--rating in stars, category-->
 			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}  {{#if editID}}<input type="text" id="editCategory" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{category}}{{/unless}}<br>
 			<!--link to video, price-->
-			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}{{video}}{{/unless}}  {{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
+			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}<a href="{{video}}">Video</a>{{/unless}}  {{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
 		</div>
 		<div class="appFilteringIcons">
 			<!--filtering-icons-->
@@ -214,8 +214,4 @@
 			</div>
 		</div>
 </template>
-
-
-
-
 
