@@ -1,3 +1,12 @@
+//DELETE METHOD, REMOVE LATER!
+Meteor.startup(function() {
+	return Meteor.methods({
+		removeAllApps: function() {
+			return AppCollection.remove({});
+		}
+    });
+});
+
 //Schema for the presentation of the applications
 AppSchema = new SimpleSchema({
 	//Icon (cover) of the application
