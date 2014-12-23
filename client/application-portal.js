@@ -36,12 +36,19 @@ Template.searchField.helpers({
 });
 //Events
 Template.searchField.events({
-	"click #sb": function(){
+	"click #sb": function(){	//if the search-button is clicked
 		var keyword = $("#sf").val();
 		console.log("Entered keyword: ", keyword);
 		Meteor.call('invokeAPI', keyword);
 		return [Session.set("sbPressed", true), Session.set("enteredKeyword", keyword)];
-    }
+    },
+    "keyup #sf": function(e){	//if the enter-key is pressed
+		if(e.keyCode == 13){
+			console.log("Enter pressed");
+			var keyword = $("#sf").val();
+			return [Session.set("sbPressed", true), Session.set("enteredKeyword", keyword)];
+		}
+	}
 });
 
 //Add new app
@@ -143,19 +150,6 @@ Template.appList.helpers({
 });
 //Events
 Template.appList.events({
-	"click .apps": function(){
-		if(Session.get("editPressed")){
-			console.log("App clicked in edit-mode");
-		}
-		else if(Session.get("savePressed")){
-			console.log("Ok-button clicked");
-		}
-		else{
-			console.log("App clicked");
-			var appId = this._id;
-			return [Session.set("clickedApp", appId), Session.set("appClicked")];
-		}
-	},
     "click #appEdit": function(){
 		var appId = this._id;
 		console.log("Edit pressed")
@@ -178,13 +172,6 @@ Template.appDetails.helpers({
 			return true
 		}
 		else return false
-	},
-	appClicked: function(){
-		var appId = this._id;
-		var clickedApp = Session.get("clickedApp");
-		if(appId == clickedApp){
-			return console.log("Clicked here")
-		}
 	},
 	motionClicked: function(){
 		return Session.get("motionClicked")
