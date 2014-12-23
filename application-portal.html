@@ -45,9 +45,7 @@
 
 <!--Template for the search field-->
 <template name="searchField">
-		<form id="sfh" class="searchField">
 			<input type="text" id="sf" size="40" maxlength="120" class="searchquery" placeholder="Search for an application"><input type="button" id="sb" value="Search" class="searchbutton">
-		</form>
 </template>
 
 <template name="appHeader">
@@ -59,7 +57,8 @@
 	{{#each app}}
 	<div class="apps">
 		<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">
-		<input type="button" title="Ok" id="appSave" value="Ok" class="appSave">
+		<input type="button" title="Leave the edit-mode" id="appSave" value="Ok" class="appSave">
+		<input type="button" title="Click to get more information about the app in the offered market store" id="appLink" value="Market Store" class="appLink" onClick="window.location.href='{{link}}'">
 		{{> appDetails}}	
 	</div>
 	{{/each}}
@@ -79,7 +78,7 @@
 			<!--developer-->
 			{{#if editID}}<input type="text" id="editDeveloper" size="25" maxlength="50" class="appEdit" placeholder="Developer">{{/if}}{{#unless editID}}{{developer}}{{/unless}}<br>
 			<!--rating in stars, category-->
-			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}{{rating}}{{/unless}}  {{#if editID}}<input type="text" id="editCategory" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{category}}{{/unless}}<br>
+			{{#if editID}}<input type="text" id="editRating" size="4" maxlength="5" class="appEdit" placeholder="Rating">{{/if}}{{#unless editID}}<span>Rating: </span>{{rating}}{{/unless}}  {{#if editID}}<input type="text" id="editCategory" size="14" maxlength="50" class="appEdit" placeholder="Category">{{/if}}{{#unless editID}}{{category}}{{/unless}}<br>
 			<!--link to video, price-->
 			{{#if editID}}<input type="text" id="editVideo" size="10" maxlength="150" class="appEdit" placeholder="Video link">{{/if}}{{#unless editID}}<a href="{{video}}">Video</a>{{/unless}}  {{#if editID}}<input type="text" id="editPrice" size="8" maxlength="50" class="appEdit" placeholder="Price">{{/if}}{{#unless editID}}{{price}}{{/unless}}<br>
 		</div>
@@ -214,4 +213,6 @@
 			</div>
 		</div>
 </template>
+
+
 
