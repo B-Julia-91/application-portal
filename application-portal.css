@@ -1,4 +1,4 @@
-/* CSS declarations go here */
+/* CSS declarations */
 body {
   font-family: sans-serif;
   padding: 0;
@@ -20,7 +20,6 @@ body {
 	height: 220px;
 	margin: 10px;
 	position: relative;
-	border: 5px solid grey;
 }
 #logo{
 	position: relative;
@@ -53,7 +52,6 @@ h1{
 	min-width: 1024px;
 	height: auto;
 	margin: 10px;
-	border: 2px solid grey;
 }
 #filterblock{
 	float: left;
@@ -79,25 +77,18 @@ h1{
 	top: 5px;
 	left: 250px;
 }
-#appHeader{
-	margin: 0px;
-	float: left;
-	width: 50px;
-	height: 5px;
-}
 #sorting{
 	position: absolute;
 	top: 0px;
-	left: 800px;
+	right: 50px;
 }
-#appList{
+.appList{
 	position: absolute;
 	top: 45px;
 	left: 0px;
 	min-height: 100%;
-	width: 1065px;
+	width: auto;
 	height: auto;
-	border: 5px solid blue;
 }
 .apps{
 	position: relative;
@@ -120,20 +111,14 @@ h1{
 	height: 130px;
 	margin-left: auto;
 	margin-right: auto;
-	border: 2px solid red;
+	border: 2px solid grey;
 }
 .appDetail{
 	margin: 2px;
-	border: 1px solid grey;
 }
 .appFilteringIcons{
 	margin: 1px;
-	border: 1px solid grey;
 }
 .appLinkStore{
 	margin: 2px;
-	border: 1px solid grey;
-}
-.selected{
-	background-color: yellow;
 }
