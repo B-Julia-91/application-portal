@@ -1,4 +1,6 @@
 //Client
+//The following methods are only loaded on the client
+//Represents the "logic" component
 
 //sets the global variables to false at the beginning
 Meteor.startup(function() {					
@@ -36,13 +38,13 @@ Template.searchField.helpers({
 });
 //Events
 Template.searchField.events({
-	"click #sb": function(){	//if the search-button is clicked
+	"click #sb": function(){		//if the search-button is clicked
 		var keyword = $("#sf").val();
 		console.log("Entered keyword: ", keyword);
-		Meteor.call('invokeAPI', keyword);
+		Meteor.call('invokeAPI', keyword);			//calls the crawler
 		return [Session.set("sbPressed", true), Session.set("enteredKeyword", keyword)];
     },
-    "keyup #sf": function(e){	//if the enter-key is pressed
+    "keyup #sf": function(e){		//if the enter-key is pressed inside the text field
 		if(e.keyCode == 13){
 			console.log("Enter pressed");
 			var keyword = $("#sf").val();
@@ -59,7 +61,7 @@ Template.appHeader.helpers({
 });
 //Events
 Template.appHeader.events({
-    "click #appAdd": function(){
+    "click #appAdd": function(){		//if "Add new" button is clicked, a new document is inserted into the AppCollection
 		AppCollection.insert({title: "Name your app", developer: "Choose a developer", rating: 1, category: "Choose a category", video: "Link to a video", price: "", motionSensor: false, touchscreen: false, microphone: false, proximitySensor: false, tap: false, drag: false, flick: false, tilt: false, shake: false, pan: false, wave: false, arms: false, oneHand: false, twoHands: false, finger: false, vision: false, hearing: false, speaking: false, standing: false, sitting: false, lying: false, horizontal: false, vertical: false});
 	}
     
@@ -69,8 +71,8 @@ Template.appHeader.events({
 //Helper 
 Template.appList.helpers({
     app: function(){
-		filter = {	};
-		if(Session.get("motionSensors")){
+		filter = {	};						//filter to find the applications with the following attributes
+		if(Session.get("motionSensors")){	//for example, if the "motion sensors" filtering-icon is clicked, only those apps are represented on the client's browser where the motion sensors field of the document is set to "true"
 			filter.motionSensors= true
 		}
 		if(Session.get("touchscreen")){
@@ -139,23 +141,23 @@ Template.appList.helpers({
 		if(Session.get("vertical")){
 			filter.vertical= true
 		}
-		if(Session.get("sbPressed")){
+		if(Session.get("sbPressed")){						//if the search button is pressed, the entered keyword is read out from the search field
 			var keyword = Session.get("enteredKeyword")
-			matchingTitle = new RegExp(keyword,"i");
-			filter.title = {$regex: matchingTitle}
+			matchingTitle = new RegExp(keyword,"i");		//creates a regular expression to find the titles that match the keyword. "i" performs case-insensitive matching
+			filter.title = {$regex: matchingTitle}			//stores the matching titles through the mongoDB operator $regex
 			console.log("Entries of the filter", filter)
 		}
-		return AppCollection.find(filter)
+		return AppCollection.find(filter)					//returns the applications that match the fields of the filter
 	}
 });
 //Events
 Template.appList.events({
-    "click #appEdit": function(){
+    "click #appEdit": function(){							//if the edit-button is pressed, the _id of the selected application is stored in a global variable selectedApp
 		var appId = this._id;
 		console.log("Edit pressed")
 		return [Session.set("selectedApp", appId), Session.set("editPressed", true)];
     },
-    "click #appSave": function(){
+    "click #appSave": function(){							//if the ok-button is pressed, the edit-mode is deactivated by setting the global variable selectedApp to "false"
 		return [Session.set("selectedApp", false), Session.set("editPressed", false), Session.set("savePressed", true)];
 	}
 });
@@ -164,7 +166,7 @@ Template.appList.events({
 //Helper 
 Template.appDetails.helpers({
 	
-    editID: function(){
+    editID: function(){										//function to activate the edit-mode of the selected application 
 		var appId = this._id;
 		var selectedApp = Session.get("selectedApp");
 		if(appId == selectedApp){
@@ -173,7 +175,7 @@ Template.appDetails.helpers({
 		}
 		else return false
 	},
-	motionClicked: function(){
+	motionClicked: function(){								//the following functions proof if the tag-icons are clicked
 		return Session.get("motionClicked")
 	},
 	touchClicked: function(){
@@ -246,7 +248,7 @@ Template.appDetails.helpers({
 //Events
 Template.appDetails.events({
 	
-    "keyup #editName": function (){
+    "keyup #editName": function (){						//reads out the entered characters of the text fields and updates the modified data into the collection
 		var editedName = $("#editName").val();
 		var appId = this._id;
 		console.log("Modified name: ", editedName, " has the appId ", appId);
@@ -277,7 +279,7 @@ Template.appDetails.events({
 		console.log("Modified price: ", editedPrice);
 		AppCollection.update({_id: this._id}, {$set: {price: editedPrice}});
 	},
-	"click #motionIcon": function (){
+	"click #motionIcon": function (){												//reads out the setting of the tag-icons to update the Boolean value in the documents
 		if(Session.get("motionClicked")){
 			console.log("false")
 			AppCollection.update({_id: this._id}, {$set: {"motionSensors": false}});
@@ -553,7 +555,7 @@ Template.appDetails.events({
 			return Session.set("vertClicked", true)
 		}
 	},
-	"keyup #editLink": function (){
+	"keyup #editLink": function (){										//reads out the characters of the text field and updates it in the collection
 		var editedLink = $("#editLink").val();
 		console.log(editedLink);
 		AppCollection.update({_id: this._id}, {$set: {link: editedLink}});
@@ -561,9 +563,10 @@ Template.appDetails.events({
 });
 
 //Sorting
+//TODO: Sort by title, best-liked and newest apps
 //Helper 
 Template.sorting.helpers({
-    
+
     
 });
 //Events
@@ -574,6 +577,7 @@ Template.sorting.events({
 
 
 //Market-Store-filtering
+//TODO: Sort by different market stores
 //Helper 
 Template.storeFiltering.helpers({
     
@@ -589,7 +593,7 @@ Template.storeFiltering.events({
 //Icon-Filtering
 //Helper
 Template.iconFiltering.helpers({
-	motionSensors: function(){
+	motionSensors: function(){				//the following functions proof if the filtering-icons are clicked
 		return Session.get("motionSensors")
 	},
 	touchscreen: function(){
@@ -662,7 +666,7 @@ Template.iconFiltering.helpers({
 });
 //Events
 Template.iconFiltering.events({
-	"click #motion": function(){
+	"click #motion": function(){				//sets the Boolean value of the filtering-icons to activate or deactivate the icons		
 		if(Session.get("motionSensors")){
 			return Session.set("motionSensors", false)
 		}
