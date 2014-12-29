@@ -1,4 +1,6 @@
 //Server
+//The following methods are only loaded on the server
+//Represents the "crawler" component
 
 Meteor.methods({
 	invokeAPI: function(keyword) {
@@ -13,7 +15,7 @@ Meteor.methods({
 		
 		HTTP.get(urlSearch, function(error,appDetails){
 			if(!error){
-				for(var i=0; i<1; i++){
+				for(var i=0; i<appDetails.data.length; i++){
 					console.log(appDetails.data[i].itemID);
 					var urlAppInfo = 'http://api.playstoreapi.com/v1.1/apps/' + appDetails.data[i].itemID + '?key=' + apiKey;
 					HTTP.get(urlAppInfo, function(error,appInfo){
