@@ -1,4 +1,7 @@
-//DELETE METHOD, REMOVE LATER!
+//Method to allow the deleting of every document of the collection on client-side
+//To call this method, run the following command in the console:
+//Meteor.call('invokeAPI')
+
 Meteor.startup(function() {
 	return Meteor.methods({
 		removeAllApps: function() {
@@ -142,5 +145,6 @@ AppSchema = new SimpleSchema({
 	}
 });
 
-//New MongoDB collection
+//Creates a new MongoDB collection where all the applications are stored
+//The fiels are given by the schema
 AppCollection = new Meteor.Collection("appCollection", AppSchema);
