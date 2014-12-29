@@ -1,3 +1,5 @@
+<!--Represents the "web portal" component-->
+
 <head>
   <title>Application-portal</title>
 </head>
@@ -14,25 +16,33 @@
 		<a href="./" id="logo" title="Application portal for motion- and touch-based applications"><img src='/Test2.png' width="200" height="200" alt="Application Portal"/></a>
 		<div id="heading"><h1>Application Portal</h1><br><p>for motion- and touch-based applications</p></div>
 		<div id="search-box">
+		<!--Template for the search field-->
 		{{> searchField}}
 		</div>
 	</div>
 	<!--Content block with filtering and applications-->
 	<div id="content">
+		<!--Filterblock with filtering features-->
 		<div id="filterblock">
 			<div id="stores">
+				<!--Template for market store filtering-->
 				{{> storeFiltering}}
 			</div>
 			<div id="icons">
+				<!--Template for icon filtering-->
 				{{> iconFiltering}}
 			</div>
 		</div>
+		<!--Application list-->
 		<div id="app-block">
-			{{>appHeader}}
+			<!--Template for header of the application list-->
+			{{>appHeader}} 
 			<div id="sorting">
+				<!--Template for the sorting feature-->
 				{{> sorting}}
 			</div>
 			<div id="appList">
+				<!--Template for the application list-->
 				{{> appList}}
 			</div>
 		</div>
@@ -49,11 +59,13 @@
 </template>
 
 <template name="appHeader">
+	<!--Button to add new applications to the database-->
 	<p>Applications:<input type="button" title="Add new application" id="appAdd" value="Add new" class="appAdd"></p>
 </template>
 
 <!--Template for the application container-->
 <template name="appList">
+	<!--Block of applications-->
 	{{#each app}}
 	<div class="apps">
 		<input type="button" title="Add additional information" id="appEdit" value="Edit" class="appEdit">
@@ -136,7 +148,7 @@
 			{{/unless}}
 		</div>
 		<div class="appLinkStore">
-			<!--link to the market stores-->
+			<!--link to the market store(s)-->
 			{{#if editID}}<input type="text" id="editLink" size="25" maxlength="150" class="appEdit" placeholder="Link to market stores">{{/if}}
 		</div>
 </template>
@@ -213,6 +225,4 @@
 			</div>
 		</div>
 </template>
-
-
 
